@@ -1,0 +1,6 @@
+{
+  "require": {
+    "iprbooks/iprbooks-ebs-sdk": "dev-master",
+    "firebase/php-jwt": "5.0.0"
+  }
+}
