@@ -45,7 +45,6 @@ try {
 }
 
 $integrationManager = new IntegrationManager($client);
-$autoLoginUrl = $integrationManager->generateAutoAuthUrl($USER->email, "", User::STUDENT);
 
 switch ($action) {
     case 'getlist':
@@ -64,6 +63,8 @@ switch ($action) {
                 $booksCollection->get();
 
                 foreach ($booksCollection as $book) {
+                    $autoLoginUrl = $integrationManager->generateAutoAuthUrl($USER->email, "", User::STUDENT, $book->getId());
+
                     $content .= "<div class=\"ipr-item\" data-id=\"" . $book->getId() . "\">
                                     <div class=\"row\" style='padding: 10px 0'>
                                         <div id=\"ipr-item-image-" . $book->getId() . "\" class=\"col-sm-3\">
@@ -99,6 +100,7 @@ switch ($action) {
                 $journalsCollection->get();
 
                 foreach ($journalsCollection as $journal) {
+                    $autoLoginUrl = $integrationManager->generateAutoAuthUrl($USER->email, "", User::STUDENT, $journal->getId());
                     $content .= "<div class=\"ipr-item\" data-id=\"" . $journal->getId() . "\">
                                     <div class=\"row\" style='padding: 10px 0'>
                                         <div id=\"ipr-item-image-" . $journal->getId() . "\" class=\"col-sm-3\">
