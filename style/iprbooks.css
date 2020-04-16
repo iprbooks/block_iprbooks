@@ -1,7 +1,3 @@
-.test {
-    background: aquamarine;
-}
-
 .ipr-item {
     cursor: pointer;
 }
@@ -209,3 +205,10 @@ a:not([href]):not([tabindex]) {
     border-color: #dee2e6;
 }
 
+.tab-content > .tab-pane {
+    display: none;
+}
+
+.tab-content > .active {
+    display: block;
+}
