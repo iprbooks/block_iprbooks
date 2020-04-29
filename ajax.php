@@ -17,17 +17,17 @@ $page = optional_param('page', 0, PARAM_INT);
 
 //book filter
 $filter_book = array(
-    'filter-book-title' => optional_param('filter-book-title', "", PARAM_TEXT),
-    'filter-book-pubhouse' => optional_param('filter-book-pubhouse', "", PARAM_TEXT),
-    'filter-book-author' => optional_param('filter-book-author', "", PARAM_TEXT),
-    'filter-book-yearleft' => optional_param('filter-book-yearleft', "", PARAM_TEXT),
-    'filter-book-yearright' => optional_param('filter-book-yearright', "", PARAM_TEXT)
+    'ipr-filter-book-title' => optional_param('ipr-filter-book-title', "", PARAM_TEXT),
+    'ipr-filter-book-pubhouse' => optional_param('ipr-filter-book-pubhouse', "", PARAM_TEXT),
+    'ipr-filter-book-author' => optional_param('ipr-filter-book-author', "", PARAM_TEXT),
+    'ipr-filter-book-yearleft' => optional_param('ipr-filter-book-yearleft', "", PARAM_TEXT),
+    'ipr-filter-book-yearright' => optional_param('ipr-filter-book-yearright', "", PARAM_TEXT)
 );
 
 //journal filter
 $filter_journal = array(
-    'filter-journal-title' => optional_param('filter-journal-title', "", PARAM_TEXT),
-    'filter-journal-pubhouse' => optional_param('filter-journal-pubhouse', "", PARAM_TEXT),
+    'ipr-filter-journal-title' => optional_param('ipr-filter-journal-title', "", PARAM_TEXT),
+    'ipr-filter-journal-pubhouse' => optional_param('ipr-filter-journal-pubhouse', "", PARAM_TEXT),
 );
 
 
@@ -53,11 +53,11 @@ switch ($action) {
                 $booksCollection = new BooksCollection($client);
 
                 //set filters
-                $booksCollection->setFilter(BooksCollection::TITLE, $filter_book['filter-book-title']);
-                $booksCollection->setFilter(BooksCollection::PUBHOUSE, $filter_book['filter-book-pubhouse']);
-                $booksCollection->setFilter(BooksCollection::AUTHOR, $filter_book['filter-book-author']);
-                $booksCollection->setFilter(BooksCollection::YEAR_LEFT, $filter_book['filter-book-yearleft']);
-                $booksCollection->setFilter(BooksCollection::YEAR_RIGHT, $filter_book['filter-book-yearright']);
+                $booksCollection->setFilter(BooksCollection::TITLE, $filter_book['ipr-filter-book-title']);
+                $booksCollection->setFilter(BooksCollection::PUBHOUSE, $filter_book['ipr-filter-book-pubhouse']);
+                $booksCollection->setFilter(BooksCollection::AUTHOR, $filter_book['ipr-filter-book-author']);
+                $booksCollection->setFilter(BooksCollection::YEAR_LEFT, $filter_book['ipr-filter-book-yearleft']);
+                $booksCollection->setFilter(BooksCollection::YEAR_RIGHT, $filter_book['ipr-filter-book-yearright']);
 
                 $booksCollection->setOffset($booksCollection->getLimit() * $page);
                 $booksCollection->get();
@@ -93,8 +93,8 @@ switch ($action) {
                 $journalsCollection = new JournalsCollection($client);
 
                 //set filters
-                $journalsCollection->setFilter(JournalsCollection::TITLE, $filter_journal['filter-journal-title']);
-                $journalsCollection->setFilter(JournalsCollection::PUBHOUSE, $filter_journal['filter-journal-pubhouse']);
+                $journalsCollection->setFilter(JournalsCollection::TITLE, $filter_journal['ipr-filter-journal-title']);
+                $journalsCollection->setFilter(JournalsCollection::PUBHOUSE, $filter_journal['ipr-filter-journal-pubhouse']);
 
                 $journalsCollection->setOffset($journalsCollection->getLimit() * $page);
                 $journalsCollection->get();
@@ -130,6 +130,9 @@ switch ($action) {
         break;
 }
 
+if (mb_strlen($content) < 200) {
+    $content = '<div style="font-size: 150%; text-align: center;">По вашему запросу ничего не найдено</div>' . $content;
+}
 
 echo json_encode(['action' => $action, 'type' => $type, 'page' => $page, 'html' => $content]);
 

@@ -2,6 +2,22 @@ var type = 'book';
 $(document).ready(function () {
     // init
     send_request(type);
+
+    $('.ipr-form-control').keypress(function (event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("ipr-filter-apply").click();
+        }
+    });
+
+    $('.iprbook-nav-link').click(function (e) {
+        $(".iprbook-nav-link").removeClass("active");
+        $(this).addClass("active");
+        $(".iprbook-tab-pane").removeClass("active");
+        $('#iprbook-' + $(this).data("type")).addClass("active");
+    })
+
 });
 
 // tab
